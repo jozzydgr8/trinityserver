@@ -20,9 +20,9 @@ app.use(emailRoutes);
 app.use(paymentRoutes);
 app.use(retrieveStripe);
 
-app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`🚀 Server running on http://localhost:${port}`);
+// });
 
 // Export for Vercel
 module.exports = app;
