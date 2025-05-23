@@ -23,8 +23,8 @@ router.post('/create-checkout-session', async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `http://localhost:3000/trinityfoundation/stripesuccess?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: 'http://localhost:3000/cancel',
+      success_url: `https://thetrinityarmsfoundation.com/stripesuccess?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: 'https://thetrinityarmsfoundation.com/donate',
     });
 
     res.json({ url: session.url });
