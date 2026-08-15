@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const sendEmail = require('../Util/mailer');
+const sendEmail = require('../config/mailer');
 
 router.post('/subscribe', async (req, res) => {
   if (!req.body.recipient_email) {

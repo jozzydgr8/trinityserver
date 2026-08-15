@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const serverless = require('serverless-http');
-
+// const serverless = require('serverless-http');
+const mongoose = require('mongoose');
 const app = express();
-const port = 5000;
+
 
 // Middlewares
 app.use(cors());
@@ -20,9 +20,20 @@ app.use(emailRoutes);
 app.use(paymentRoutes);
 app.use(retrieveStripe);
 
-app.listen(port, () => {
-    console.log(`🚀 Server running on http://localhost:${port}`);
-});
+//route middleware
+app.use('/blog',require('./routes/blogRoute'));
+app.use('/user',require('./routes/userRoute'));
+
+
+//conrct to database
+mongoose.connect(process.env.mongoose_uri)
+.then(()=>{
+    app.listen(process.env.port, ()=>{
+        console.log(`server live at port ${process.env.port}`)
+    })
+}).catch(error=>{
+    console.error(error)
+})
 
 // Export for Vercel
 // module.exports = app;
