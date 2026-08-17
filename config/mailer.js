@@ -1,29 +1,35 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
-    user: process.env.webusername,   
-    pass: process.env.mailpass      
-  }
+    user: process.env.webusername,
+    pass: process.env.mailpass,
+  },
 });
 
-function sendEmail({ recipient_email, subject, message }) {
-  return new Promise((resolve, reject) => {
+async function sendEmail({ recipient_email, subject, message }) {
+  try {
     const mail_configs = {
-      from: 'info@thetrinityarmsfoundation.com',
+      from: process.env.webusername,
       to: recipient_email,
       subject,
-      html: message
+      html: message,
     };
 
-    transporter.sendMail(mail_configs, function (error, info) {
-      if (error) {
-        return reject({ message: 'An error occurred while sending email.' });
-      }
-      return resolve({ message: 'Email sent successfully.' });
-    });
-  });
+    const info = await transporter.sendMail(mail_configs);
+
+    console.log("Email sent");
+
+    return {
+      message: "Email sent successfully.",
+      messageId: info.messageId,
+    };
+  } catch (error) {
+    console.error("Nodemailer error:", error);
+
+    throw error;
+  }
 }
 
 module.exports = sendEmail;

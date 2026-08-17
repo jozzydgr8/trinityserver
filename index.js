@@ -12,17 +12,19 @@ app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 
 // Routes (update path as needed based on your project structure)
-const emailRoutes = require('./routes/emailConfig');
+const emailRoutes = require('./routes/emailRoute');
 const paymentRoutes = require('./routes/stripePayment');
 const retrieveStripe = require('./routes/retrievestripe');
 
-app.use(emailRoutes);
+
 app.use(paymentRoutes);
 app.use(retrieveStripe);
 
 //route middleware
 app.use('/blog',require('./routes/blogRoute'));
 app.use('/user',require('./routes/userRoute'));
+app.use('/subscribe', require('./routes/subscribeRoute'));
+app.use('/message', require('./routes/emailRoute'));
 
 
 //conrct to database
