@@ -26,24 +26,28 @@ const sendNewsLetter = async (req, res) => {
   const { subject, message, recipient_email } = req.body;
 
   try {
-    // Build database query
-    const query = {};
-
-    // If specific recipients were selected
-    if (Array.isArray(recipient_email) && recipient_email.length > 0) {
-      query.email = { $in: recipient_email };
+    if (!subject || !message) {
+      return res.status(400).json({
+        message: "Subject and message are required.",
+      });
     }
 
-    // Get subscribers
-    const subscribers = await Subscriber.find(query).select("email");
+    if (!Array.isArray(recipient_email) || recipient_email.length === 0) {
+      return res.status(400).json({
+        message: "At least one recipient is required.",
+      });
+    }
+
+    const subscribers = await Subscriber.find({
+      email: { $in: recipient_email },
+    }).select("email");
 
     if (subscribers.length === 0) {
-      return res.status(404).send({
+      return res.status(404).json({
         message: "No subscribers found.",
       });
     }
 
-    // Send the same newsletter to every subscriber
     const emailPromises = subscribers.map((subscriber) =>
       sendEmail({
         subject,
@@ -54,16 +58,17 @@ const sendNewsLetter = async (req, res) => {
 
     await Promise.all(emailPromises);
 
-    return res.status(200).send({
+    return res.status(200).json({
       message: `Newsletter successfully sent to ${subscribers.length} subscriber(s).`,
     });
   } catch (error) {
     console.error("Newsletter Error:", error);
 
-    return res.status(500).send({
+    return res.status(500).json({
       message: error.message,
     });
   }
 };
+
 
 module.exports={subscriptionMessage, sendSingleMessage, sendNewsLetter}
