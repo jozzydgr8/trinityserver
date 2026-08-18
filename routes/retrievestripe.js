@@ -7,7 +7,7 @@ const stripe = require('stripe')(
 
 const {
   saveStripeDonation,
-} = require('../controllers/donationController');
+} = require('../controller/donationController');
 
 router.get(
   '/retrieve-session/:sessionId',
