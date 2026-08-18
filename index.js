@@ -27,6 +27,7 @@ app.use('/user',require('./routes/userRoute'));
 app.use('/subscribe', require('./routes/subscribeRoute'));
 app.use('/message', require('./routes/emailRoute'));
 app.use('/', require('./routes/paypalRoute'));
+app.use('/donation', require('./routes/donationRoute'))
 
 
 //conrct to database
