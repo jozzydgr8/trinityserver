@@ -17,6 +17,7 @@ const paymentRoutes = require('./routes/stripePayment');
 const retrieveStripe = require('./routes/retrievestripe');
 
 
+
 app.use(paymentRoutes);
 app.use(retrieveStripe);
 
@@ -25,6 +26,7 @@ app.use('/blog',require('./routes/blogRoute'));
 app.use('/user',require('./routes/userRoute'));
 app.use('/subscribe', require('./routes/subscribeRoute'));
 app.use('/message', require('./routes/emailRoute'));
+app.use('/', require('./routes/paypalRoute'));
 
 
 //conrct to database
