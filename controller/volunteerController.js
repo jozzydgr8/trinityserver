@@ -22,25 +22,50 @@ const createVolunteer = async (req, res) => {
       firstName,
       lastName,
       email,
+      phone,
       address,
       about,
     } = req.body;
 
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Check if email already exists
+    const existingVolunteer = await Volunteer.findOne({
+      email: normalizedEmail,
+    });
+
+    if (existingVolunteer) {
+      return res.status(409).json({
+        message: 'This email has already been used to submit a volunteer application.',
+      });
+    }
+
     const volunteer = await Volunteer.create({
       firstName,
       lastName,
-      email,
+      email: normalizedEmail,
+      phone,
       address,
       about,
     });
 
     res.status(201).json(volunteer);
   } catch (error) {
+    console.error('Error creating volunteer:', error);
+
+    // Handles MongoDB duplicate-key error as an extra safeguard
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: 'This email has already been used to submit a volunteer application.',
+      });
+    }
+
     res.status(400).json({
       message: error.message,
     });
   }
 };
+
 
 
 module.exports = {

@@ -1,11 +1,13 @@
-const { signUser, addUser } = require('../controller/userController');
+const { signUser, addUser, getUsers } = require('../controller/userController');
 const User = require('../schema/userSchema');
 const router = require('express').Router();
-const authenticator = require('../middleware/authenticator')
+const authenticator = require('../middleware/authenticator');
+const superAuthenticator  = require('../middleware/superAuthenticator');
 
 router.post('/createuser',authenticator, addUser);
+router.get('/', authenticator, getUsers)
 router.post('/signuser', signUser);
-router.delete('/:id', authenticator, async(req,res)=>{
+router.delete('/:id', superAuthenticator, async(req,res)=>{
     try{
         const {id} = req.params;
         const user = await User.findOneAndDelete({_id:id});
