@@ -5,7 +5,7 @@ const authenticator = require('../middleware/authenticator');
 const superAuthenticator  = require('../middleware/superAuthenticator');
 
 router.post('/createuser',authenticator, addUser);
-router.get('/', authenticator, getUsers)
+router.get('/getUsers', authenticator, getUsers)
 router.post('/signuser', signUser);
 router.delete('/:id', superAuthenticator, async(req,res)=>{
     try{
