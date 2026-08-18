@@ -10,13 +10,13 @@ const {
 
 
 router.get(
-  '/',
+  '/',authenticator,
   getVolunteers
 );
 
 
 router.post(
-  '/',authenticator,
+  '/',
   createVolunteer
 );
 
