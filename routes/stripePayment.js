@@ -27,8 +27,8 @@ router.post(
                   name: product.name,
                 },
 
-                // Stripe expects the smallest currency unit
-                // e.g. $25 = 2500 cents
+                // $25 -> 2500
+                // £25 -> 2500
                 unit_amount: product.price,
               },
 
@@ -36,13 +36,13 @@ router.post(
             },
           ],
 
-          // Pre-fill customer's email in Stripe Checkout
-          customer_email: customer?.email || undefined,
+          customer_email:
+            customer?.email || undefined,
 
-          // Store donor information with the Stripe session
           metadata: {
             donorName: customer?.name || '',
             donorPhone: customer?.phone || '',
+            comment: customer?.comment || '',
           },
 
           success_url:
