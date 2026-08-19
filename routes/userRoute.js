@@ -31,10 +31,10 @@ router.delete('/:id', superAuthenticator, async (req, res) => {
     res.status(200).json(user);
 
   } catch (error) {
-    console.error(error);
+    console.error("DELETE USER ERROR:", error);
 
-    res.status(500).json({
-      error: 'Failed to delete user',
+    return res.status(500).json({
+      error: error instanceof Error ? error.message : String(error),
     });
   }
 });
