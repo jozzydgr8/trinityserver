@@ -16,6 +16,10 @@ const UserSchema = new Schema({
     },
     admin:{
         type:Boolean,
+        default:true,
+    },
+    superadmin:{
+        type:Boolean,
         default:false,
     },
     createdBy:{
