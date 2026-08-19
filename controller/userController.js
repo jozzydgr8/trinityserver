@@ -31,7 +31,7 @@ const signUser = async(req,res)=>{
 
 const getUsers = async(req,res)=>{
     try{
-        const user = await User.find({}).select('-_id email admin superadmin');
+        const user = await User.find({}).select('_id email admin superadmin');
     
         res.status(200).json(user)
     }catch(error){
