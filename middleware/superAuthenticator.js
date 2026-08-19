@@ -10,7 +10,7 @@ const requireSuperAdmin = async (req, res, next) => {
 
   try {
     const token = authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWTSECRET);
+    const decoded = jwt.verify(token, process.env.jwt_secret);
 
     const user = await userModel.findById(decoded._id);
 

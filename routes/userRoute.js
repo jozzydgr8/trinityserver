@@ -7,13 +7,36 @@ const superAuthenticator  = require('../middleware/superAuthenticator');
 router.post('/createuser',authenticator, addUser);
 router.get('/getUsers', authenticator, getUsers)
 router.post('/signuser', signUser);
-router.delete('/:id', superAuthenticator, async(req,res)=>{
-    try{
-        const {id} = req.params;
-        const user = await User.findOneAndDelete({_id:id});
-        res.status(200).json(user)
-    }catch(error){
-        res.status(400).json({error:error})
+router.delete('/:id', superAuthenticator, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'User not found',
+      });
     }
-})
+
+    // Prevent deleting another superadmin
+    if (user.superadmin) {
+      return res.status(403).json({
+        error: 'Superadmin users cannot be deleted',
+      });
+    }
+
+    await User.findByIdAndDelete(id);
+
+    res.status(200).json(user);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Failed to delete user',
+    });
+  }
+});
+
 module.exports=router;
