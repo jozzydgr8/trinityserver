@@ -1,9 +1,5 @@
 const nodemailer = require("nodemailer");
-  console.log("EMAIL:", process.env.webusername);
-console.log(
-  "PASSWORD EXISTS:",
-  !!process.env.mailpass
-);
+  
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -34,6 +30,11 @@ async function sendEmail({ recipient_email, subject, message }) {
     };
   } catch (error) {
     console.error("Nodemailer error:", error);
+    console.log("EMAIL:", process.env.webusername);
+console.log(
+  "PASSWORD EXISTS:",
+  !!process.env.mailpass
+);
 
     throw error;
   }
