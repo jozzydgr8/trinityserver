@@ -11,7 +11,7 @@ const getProduct = async(req,res)=>{
     }
 }
 const createProduct = async (req, res) => {
-  const { title,  description, link } = req.body;
+  const { title,  description, link, category } = req.body;
 
   try {
     if (!req.file) {
@@ -32,6 +32,7 @@ const createProduct = async (req, res) => {
       title,
       description,
       link,
+      category,
       featuredImage: result.secure_url,
       image_id: result.public_id, 
     });
