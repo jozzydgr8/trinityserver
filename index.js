@@ -29,6 +29,7 @@ app.use('/message', require('./routes/emailRoute'));
 app.use('/', require('./routes/paypalRoute'));
 app.use('/donation', require('./routes/donationRoute'));
 app.use('/volunteers', require('./routes/volunteerRoute'));
+app.use('/product', require('./routes/productRoute'));
 
 
 //conrct to database
